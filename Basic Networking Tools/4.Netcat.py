@@ -1,7 +1,7 @@
 import argparse       # To parse command-line arguments.
 import os             # Runs OS commands (imported for CD command).
-import socket         # Provides low-level networking interfaces.
 import shlex          # Tokenizes strings using shell-like syntax.
+import socket         # Provides low-level networking interfaces.
 import subprocess     # Run and interact with system commands.
 import sys            # Interact with the Python interpreter.
 import textwrap       # Formats long strings, especially for console output.
