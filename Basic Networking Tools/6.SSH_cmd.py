@@ -23,8 +23,8 @@ if __name__ == '__main__':
     user = input('Enter username: ')
     # The password is hidden so no shoulder surfing.
     password = getpass.getpass()
-    # Anything after 'or' is default values. You can test with "bandit.labs.overthewire.org" instead of.
-    ip = input('Enter server IP or Domain: ') or '192.168.10.50'
+    # Anything after 'or' is default values. You can test with "bandit.labs.overthewire.org".
+    ip = input('Enter server IP or Domain: ') or '192.168.1.7'
     port = input('Enter port or <CR>: ') or 2220
     cmd = input('Enter command or <CR>: ') or 'id'
     ssh_command(ip, port, user, password, cmd)
