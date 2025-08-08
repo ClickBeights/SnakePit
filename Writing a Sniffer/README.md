@@ -12,3 +12,8 @@ Furthermore, we use bit shifting to assign either high-order nybble or low-order
 ## Decoding ICMP responses
 
 The third script in this list is a continuation of the 2nd one. The purpose of this script is to decode the ICMP response so that we can understand whether or not a target is alive on the network. Details exist as comments in the script itself, apologies for extensive commenting.
+
+
+## The Scanner
+
+The last script in this section is the <b>4.Scanner.py</b>. This script uses the subnet specified in top and iterates through all address firing UDP packet for each address. From there the script makes 3 checks to on the response, if got any, to verify the responding machine and add it to a list. The verificatoin occurs on the ICMP response packets and it uses techniques from previous scripts.
