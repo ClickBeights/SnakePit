@@ -1,4 +1,4 @@
-## Sniffer Scapy 
+# Scapy 
 
 This section demonstrates one of the most used netowrk modules <b>Scapy</b>. The first script shows a basic network sniffer that retrieves the first packet it sniffs and 
 prints out detailed information broken down in sections by the module.  
