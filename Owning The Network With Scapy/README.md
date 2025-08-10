@@ -6,5 +6,9 @@ prints out detailed information broken down in sections by the module.
   
 ## Sniffing Clear Text Credentials
 
-The second script on the list <b>2.Mail_Sniffer.py</b> clear text email and password if the user/pass fields match the ones we defined in the script. Furthermore, it shows 
-how 1 module can save us many lines as this script also sniffs the network, but without the decoding overhead.
+The second script on the list <b>2.Mail_Sniffer.py</b> steals clear text email and password if:
+1. The user/pass fields match the ones we defined in the script.
+2. The protocol to sniff credentials on is defined in the scirpt.
+3. The protocol is not encrypted (Clear-Text).
+  
+Furthermore, it shows how 1 module can save us many lines as this script also sniffs the network, but without the decoding overhead.
