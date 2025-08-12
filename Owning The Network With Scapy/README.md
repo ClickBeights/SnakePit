@@ -22,4 +22,4 @@ which was used to suppress runtime warnings.
 <br>
 ## Extracting images with human faces from PCAP
 The last 2 script in this folder can be used seperatly. The goal is for the first script <b>4.Recapper.py</b> to reconstitute images from a PCAP file, and the second script <b>5.FaceDetector.py</b> to extract only the ones with faces in them and mark these images. Human face detection happens using the OpenCV and a training directory that should contain the facial detection XML from: 
-      http://eclecti.cc/files/2008/03/haarcascade_frontalface_alt.xml
+- http://eclecti.cc/files/2008/03/haarcascade_frontalface_alt.xml
