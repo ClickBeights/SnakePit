@@ -10,7 +10,7 @@ SQLi, XSS, and inserting random chunks of the initial payload.
 
 ## Using Bing for Burp
 MS Bing search engine has search capabilities that allow you to query Bing for all websites it finds on a single IP addres using the "IP" search modifier. Bing will also tell you all of the subdomains of a given domain if the "domain" seardch modifier was used. The second script in this directory demonstrates how to leerage bing for reconnaissance and gather as much information about subdomain as possoble effecively expanding our attack surface. As of today, bing has been updated to remove API key.
-Refer: https://www.microsoft.com/en-us/bing/apis/bing-web-search-api
+Refer: [Microsoft API retirement](https://learn.microsoft.com/en-us/previous-versions/bing/search-apis/bing-web-search/create-bing-search-service-resource)
 <br>
 <br>
 
