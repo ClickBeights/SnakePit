@@ -5,4 +5,11 @@ Youtube videos and the BHP-2ED book).
 
 The first <b>1.Burp_Fuzzer.py</b> script in the directory demonstrates how to generate custom payloads for fuzzing when performing security testing. It works by testing 
 SQLi, XSS, and inserting random chunks of the initial payload.
+<br>
 
+## Using Bing for Burp
+MS Bing search engine has search capabilities that allow you to query Bing for all websites it finds on a single IP addres using the "IP" search modifier. Bing will also tell you all of the subdomains of a given domain if the "domain" seardch modifier was used. The second script in this directory demonstrates how to leerage bing for reconnaissance and gather as much information about subdomain as possoble effecively expanding our attack surface. As of today, bing has been updated to removi API key.
+<br>
+<br>
+
+## Wordlist Generator
