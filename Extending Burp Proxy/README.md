@@ -15,3 +15,5 @@ Refer: [Microsoft API retirement](https://learn.microsoft.com/en-us/previous-ver
 <br>
 
 ## Wordlist Generator
+The last script in this directory may as well be the most useful. <b>3.Burp_Wordlist_Generator.py</b> is a script that will crawl a website and generate a custom wordlist for for the site in question. The script reads the HTTP response of a responding host, strips HTML code, and uses regex expression to find all words starting with alphabetical character and 2 or more "word" characters specified by "<b>\w{2,}</b>" expression.<br>
+-It also ensures no duplicate words exist in the wordlist by storing the wordlist list in a "set".
