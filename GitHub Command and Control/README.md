@@ -12,3 +12,12 @@ want.
 ## The "config" Folder
 This folder will contain configuration files in the form of JSON. each JSON file will declare modules (Payloads) that the Trojab will execute. The execution of course relies heavily on what JSON file was the 
 Trojan instructed to read. We may have different Trojans with each reading it's own JSON.
+<br>
+<br>
+
+## The "data" Folder
+In here,the trojan will be reporting it's collected information. Each trojan will be providing it's results in it's approprate directory.
+<br>
+<br>
+
+## The "modules" folder
