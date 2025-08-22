@@ -21,3 +21,4 @@ In here,the trojan will be reporting it's collected information. Each trojan wil
 <br>
 
 ## The "modules" folder
+This folder holds the code to be executed in seperate files called "module". These modules will be executed based on whether or not they have been declared in the config. As mentioned earlier, each trojan may look into it's own config file. This can help seperate trojan purposes, or mix modules across trojans, everything is possible.
