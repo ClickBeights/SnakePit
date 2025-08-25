@@ -4,6 +4,7 @@ troubleshoot any errors. It is important to note that python scripts will not ru
 <b>PyInstaller</b> which will generate a 7+-MB executable.<br><br>
 <b>Note!</b> These scripts are not meant to be used alone, they should be incorporated to the main trojan from the <b>GitHub Command and Control</b> directory.
 <br>
+<br>
 
 ## Key Logging
 logging key strokes is a staple when it comes to post exploitation tasks. The first script in this directory works by the 'keyboard' module to capure key presses. The script 
