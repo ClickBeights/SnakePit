@@ -7,5 +7,4 @@ troubleshoot any errors. It is important to note that python scripts will not ru
 <br>
 
 ## Key Logging
-logging key strokes is a staple when it comes to post exploitation tasks. The first script in this directory works by the 'keyboard' module to capure key presses. The script 
-will keep logging for a set amount of time before printing all the information it gathered.
+Logging key strokes is a staple when it comes to post exploitation tasks. The first script in this directory works by the 'keyboard' module to capure key presses. The script will keep logging for a set amount of time before printing all the information it gathered.
