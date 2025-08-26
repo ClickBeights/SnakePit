@@ -12,7 +12,7 @@ def get_dimensions():
     top = win32api.GetSystemMetrics(win32con.SM_YVIRTUALSCREEN)
     return (width, height, left, top)
 
-
+# The main function.
 def screenshot(name='screenshot'):
     # Create a handle for the entire desktop.
     hdesktop = win32gui.GetDesktopWindow()
