@@ -13,3 +13,8 @@ Logging key strokes is a staple when it comes to post exploitation tasks. The fi
 
 ## Screenshots
 The second script in this directory is <b>2.ScreenShotter.py</b> is yet another common post exploitation task, basically taking screenshots. The script leverages <b>PyWin32</b> package to make native Windows API calls. The grabber uses Windows Graphics Device Interface (GDI) to get the necessary variables for the screenshot.
+<br>
+<br>
+
+## Python Shellcode
+The third script in the directory is basically a python shellcode that is used in an exploit to execute raw shellcode without touching the filesystem. The execution steps are presented in form of comment in the script itself.
