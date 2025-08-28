@@ -18,3 +18,8 @@ The second script in this directory is <b>2.ScreenShotter.py</b> is yet another 
 
 ## Python Shellcode
 The third script in the directory is basically a python shellcode that is used in an exploit to execute raw shellcode without touching the filesystem. The execution steps are presented in form of comment in the script itself.
+<br>
+<br>
+
+## Sandbox Detection
+The last script in this directory is used to detect whether or not the trojan is running in a sandbox. The script works by monitoring for user recent input by looking for keystrokes, mouse clicks, and double clicks. Some sandboxed environment send rapid user input, others send none, in both cases, the script will read and compare input to determine whether or not it is in a sandbox.
