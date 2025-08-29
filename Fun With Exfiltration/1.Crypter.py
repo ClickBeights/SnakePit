@@ -1,111 +1,83 @@
-from ctypes import byref, c_uint, c_ulong, sizeof, Structure, windll
-import random
-import sys
-import time
-import win32api
+# This library will be used for Symmetric encryption.
+from Cryptodome.Cipher import AES, PKCS1_OAEP
+# This one for Asymmetric encryption.
+from Cryptodome.PublicKey import RSA
+from Cryptodome.Random import get_random_bytes
+from io import BytesIO
 
-# A structure that will hold the timestamp in ms of OS last input event.
-class LASTINPUTINFO(Structure):
-    _fields_ = [
-        ('cbSize', c_uint),
-        ('dwTime', c_ulong)
-    ]
+import base64
+import zlib
 
-def get_last_input():
-    struct_lastinputinfo = LASTINPUTINFO()
-    # Initialize the 'cbsize' to the size of the structure before the call.
-    struct_lastinputinfo.cbSize = sizeof(LASTINPUTINFO)
-    # Populate the 'struct_lastinputinfo.dwTime' using the 'GetLastInputInfo' function.
-    windll.user32.GetLastInputInfo(byref(struct_lastinputinfo))
-    # Determine how long the system has been running using 'GetTickCount' function.
-    run_time = windll.kernel32.GetTickCount()
-    # Calculate the elapsed time in ms.
-    elapsed = run_time - struct_lastinputinfo.dwTime
-    print(f"[*] It's been {elapsed} milliseconds since the last input event.")
-    return elapsed
+# This function will be responsible for RSA key generation (Asymmetric Encryption).
+def generate():
+    new_key = RSA.generate(2048)
+    private_key = new_key.exportKey()
+    public_key = new_key.publickey().exportKey()
 
-# Small snippet for testing the above function. Comment or remove.
-# while True:
-#    get_last_input()
-#    time.sleep(1)
+    with open('key.private', 'wb') as f:
+        f.write(private_key)
 
-class Detector:
-    def __init__(self):
-        # Initialize clicks and keystrokes to 0.
-        self.double_clicks = 0
-        self.keystrokes = 0
-        self.mouse_clicks = 0
+    with open('key.public', 'wb') as f:
+        f.write(public_key)
 
-    # This method reads the number and time of mouse clicks & keyboard clicks.
-    def get_key_press(self):
-        # Iterate over a range of valid input keys.
-        for i in range(0, 0xff):
-            # Check key pressing using the 'GetAsyncKeyState' function.
-            state = win32api.GetAsyncKeyState(i)
-            # If truthful:
-            if state & 0x0001:
-                # Check for (Left-mouse key button) known virtually as '0x1'.
-                if i == 0x1:
-                    # Increment the total click count and return timestamp for later use.
-                    self.mouse_clicks += 1
-                    return time.time()
-                # Check ASCII keypresses.
-                elif i > 32 and i < 127:
-                    # If any, increment the total number of clicks.
-                    self.keystrokes += 1
-        return None
+# This function accepts key type (public or private) as argument.
+def get_rsa_cipher(keytype):
+    # Read the corresponding file:
+    with open(f'key.{keytype}') as f:
+        key = f.read()
+    rsakey = RSA.importKey(key)
+    # Returns cipher object and the size of RSA in bytes.
+    return (PKCS1_OAEP.new(rsakey), rsakey.size_in_bytes())
 
-    # ---The primary detection loop.
-    def detect(self):
-        previous_timestamp = None
-        first_double_click = None
-        double_click_threshold = 0.35
+# This function takes is responsible for data encryption.
+def encrypt(plaintext):
+    # Compresses plaintext bytes.
+    compressed_text = zlib.compress(plaintext)
 
-        # Defined the required variables:
-        max_double_clicks = 10
-        max_keystrokes = random.randint(10, 25)
-        max_mouse_clicks = random.randint(5, 25)
-        max_input_threshold = 30000
+    # Generate random session key to be used in the AES cipher.
+    session_key = get_random_bytes(16)
+    cipher_aes = AES.new(session_key, AES.MODE_EAX)
+    # Encrypt compressed plaintext.
+    ciphertext, tag = cipher_aes.encrypt_and_digest(compressed_text)
 
-        # Retrieve the elapsed time since some form of input should have been registered by now.
-        last_input = get_last_input()
-        if last_input >= max_input_threshold:
-            # Instead of dying here, we can pad some innocuous tasks like readying registry keys of browsing the file system to pass this check.
-            # The user may sleep or leave for break, we can't assume we in a sandbox that easy and die out.
-            sys.exit(0)
+    # Pass the session key along with the ciphertext to be decrypted on the other side.
+    cipher_rsa, _ = get_rsa_cipher('public')
+    # Encrypt the (session key) with RSA key generated from the public key.
+    encrypted_session_key = cipher_rsa.encrypt(session_key)
 
-        detection_complete = False
-        while not detection_complete:
-            # Check for key presses & mouse clicks.
-            keypress_time = self.get_key_press()
-            if keypress_time is not None and previous_timestamp is not None:
-                # Calculate the time elapsed between mouse clicks.
-                elapsed = keypress_time - previous_timestamp
+    # Assign all the information we need for decryption into one payload:
+    msg_payload = encrypted_session_key + cipher_aes.nonce + tag + ciphertext
+    # Base64 encode it:
+    encrypted = base64.encodebytes(msg_payload)
+    return(encrypted)
 
-                # Compare the results to the threshold we set up earlier.
-                if elapsed <= double_click_threshold:
-                    self.mouse_clicks -= 2
-                    self.double_clicks += 1
-                    if first_double_click is None:
-                        first_double_click = time.time()
-                    else:
-                        # Look for streaming clicks which is used to trick detectors like this one.
-                        if self.double_clicks >= max_double_clicks:
-                            # If max number of double-clicks was reached in a non-human timing, we bounce.
-                            if (keypress_time - first_double_click <=
-                                    (max_double_clicks * double_click_threshold)):
-                                sys.exit(0)
-                # Verify if we passed all checks; if so, we break out the sandbox detection.
-                if (self.keystrokes >= max_keystrokes and
-                        self.double_clicks >= max_double_clicks and
-                        self.mouse_clicks >= max_mouse_clicks):
-                    detection_complete = True
+# This function is for description (Basically reversing the encryption function).
+def decrypt(encrypted):
+    # First, Base64 decode the string into bytes.
+    encrypted_bytes = BytesIO(base64.decodebytes(encrypted))
+    cipher_rsa, keysize_in_bytes = get_rsa_cipher('private')
 
-                previous_timestamp = keypress_time
-            elif keypress_time is not None:
-                previous_timestamp = keypress_time
+    # Read the encrypted session-key along with other parameters we need to decrypt from the encrypted string.
+    encrypted_session_key = encrypted_bytes.read(keysize_in_bytes)
+    nonce = encrypted_bytes.read(16)
+    tag = encrypted_bytes.read(16)
+    ciphertext = encrypted_bytes.read()
 
+    # Decrypt the session-key using the RSA private key.
+    session_key = cipher_rsa.decrypt(encrypted_session_key)
+    cipher_aes = AES.new(session_key, AES.MODE_EAX, nonce)
+    # Use that key to decrypt the message itself with the AES cipher.
+    decrypted = cipher_aes.decrypt_and_verify(ciphertext, tag)
+
+    # Finally decompress the into plaintext byte string.
+    plaintext = zlib.decompress(decrypted)
+    return plaintext
+
+# This function is used to generate the keys if you don't have any.
+#if __name__ == '__main__':
+#    generate()
+
+# Where this one is to actually use the already generated keys.
 if __name__ == '__main__':
-    d = Detector()
-    d.detect()
-    print('okay.')
+    plaintext = b'hey there you.'
+    print(decrypt(encrypt(plaintext)))
