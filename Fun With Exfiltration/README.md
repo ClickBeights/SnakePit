@@ -8,5 +8,11 @@ script in this directory is the <b>1.Crypter.py</b>. This script leverages a hyb
 
 ## Exfiltration Over Email
 
-With the data encrypted using the previous script, it is now time to move it out. The second script in this directory carries 2 sending functions, the first function is a platform independant one, sending data over regular SMPT. The second function works with Windows Specific technique using the **Win32Com** package to create an instance of outlook. Furthermore, the script deletes the email sent after submitting to clear tracks.<br>
+With the data encrypted using the previous script, it is now time to move it out. The second script in this directory carries 2 sending functions, the first function is a platform-independant one, sending data over regular SMPT. The second function works with Windows Specific technique using the **Win32Com** package to create an instance of outlook. Furthermore, the script deletes the email sent after submitting to clear tracks.<br>
 -To view the content of the email after receiving them you must decrypt them using the same encryption script.
+<br>
+<br>
+
+## Exfiltration Over File Transfer
+
+The second exfiltration script is <b>3.Transmit_Exfil.py</b>. In here, we use both **ftplib** for plaftform-independant exfiltration and **win32file** for windows functions. The plaftform-independant function facilitates FTP connection in a straigh forward function, the windows one however uses just connects to a port of a specified IP and then initiates the transfer.
