@@ -13,6 +13,12 @@ With the data encrypted using the previous script, it is now time to move it out
 <br>
 <br>
 
-## Exfiltration Over File Transfer
+## Exfiltration Over File-Transfer
 
-The second exfiltration script is <b>3.Transmit_Exfil.py</b>. In here, we use both **ftplib** for plaftform-independant exfiltration and **win32file** for windows functions. The plaftform-independant function facilitates FTP connection in a straigh forward function, the windows one however uses just connects to a port of a specified IP and then initiates the transfer.
+The third exfiltration script is <b>3.Transmit_Exfil.py</b>. In here, we use both **ftplib** for plaftform-independant exfiltration and **win32file** for windows functions. The plaftform-independant function facilitates FTP connection in a straigh forward function, the windows one however uses just connects to a port of a specified IP and then initiates the transfer.
+<br>
+<br>
+
+## Exfiltration Over PastBin
+
+The forth script on this directory demonstrates exfiltration over PastBin. This script will send the encrypted data by making a post on PastBin using the hard-coded credentials and API key. Since the data is encrypted, only we can view the original information. Now why PastBin ? Simply because it could bypass any blacklisting that a firewall or a proxy may have as PastBin is a well known site. The script creates an IE COM Object, for now the visibility of the execution is set to 1, for maximum stealth and background activity set the visibiity to 0.
