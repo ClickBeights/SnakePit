@@ -22,4 +22,9 @@ The forth script on this directory demonstrates exfiltration over PastBin. This 
 <br>
 
 ## Putting it All Together
-Finally, we tie all the exfiltration methods together with the **5.Exfil.py**. The script will exfiltrate data following the imports presented in the script. It is important to understand that all previous scripts must be in the same directory with the final script so that it can reach for them. 
+Finally, we tie all the exfiltration methods together with the **5.Exfil.py**. The script will exfiltrate data following the imports presented in the script. It is important to understand that all previous scripts must be in the same directory with the final script so that it can reach for them.
+<br>
+<br>
+
+## Decryption
+This last code is just a script to decrypt whatever is passed to it, basically read it, then decrypt it by importing the decryption method from the original **1.Crypter.py**.
