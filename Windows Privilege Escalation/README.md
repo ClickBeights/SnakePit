@@ -1,4 +1,4 @@
-# Windows Privileges Escalation
+# Windows Privilege Escalation
 
 In this section, we will be domnstrating some privileges escalation techniques on Windows OS that can be abused using python scripts. Elevating privileges post exploitation is a no brainer during a penetration testing 
 engagement.
