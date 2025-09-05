@@ -10,3 +10,8 @@ The first script in this directory **1.BHservice.py** is a vulnerable executable
 periodicaly copy a script to a temporary directory and execute it from that directory. You can find more details regarding compiling and executing inside the script.
 <br>
 <br>
+
+## Monitoring Processes
+The monitoring script (**2.Process_Monitor.py**) leverageg WMI API to recieve callbacks when events occur. This way, we can monitor process creation, process owner, parent, process, ID, and much more. Most importantly however, we want to keep an eye out for privileged processes that call external files (VBScripts or Batch).
+<br>
+<br>
