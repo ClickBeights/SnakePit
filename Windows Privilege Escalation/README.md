@@ -16,7 +16,7 @@ The monitoring script (**2.Process_Monitor.py**) leverageg WMI API to recieve ca
 <br>
 <br>
 
-## Extended Monitoring
+## Extended Process Monitoring
 In this version of the monitoring script we added a function that will monitor for the privileges in the processes. We can print out security token per process by using the following modules (**Win32security**, **Win32api**, **Win32con**) as demonstrated in the first function from the script.
 <br>
 <br>
@@ -27,3 +27,7 @@ The difference here is that this script will make sure to catch files that are d
 The tool monitor for specific directories defined in the script using a monitor thread that calls the **start_monitor** function, details are in the script.
 <br>
 <br>
+
+## Extended Files Monitoring
+After finding files that could lead to PE, we want to ensure our payload gets injected in the executed file before it gets delete as part of it's life cycle. The last script in this directory does just that. By first defining a dictionary of code snippets that match a particular file extension, the script works with more flexibility into injecting a netcat command to provide us a shell for interactive access.<br>
+\- This and all other scripts in here can be tested using the vulnerable service **1.BHservice.py**.
